@@ -1,6 +1,6 @@
 FROM ubuntu:22.04
 
-LABEL maintainer="Bibin Wilson <bibinwilsonn@gmail.com>"
+LABEL maintainer="www.andreyolegovich.ru"
 
 # Make sure the package repository is up to date.
 RUN apt-get update && \
@@ -11,7 +11,7 @@ RUN apt-get update && \
     sed -i 's|session    required     pam_loginuid.so|session    optional     pam_loginuid.so|g' /etc/pam.d/sshd && \
     mkdir -p /var/run/sshd && \
 # Install JDK 8 (latest stable edition at 2019-04-01)
-    apt-get install -qy openjdk-8-jdk && \
+    apt-get install -qy openjdk-11-jdk && \
 # Install maven
     apt-get install -qy maven && \
 # Cleanup old packages
