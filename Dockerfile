@@ -2,9 +2,15 @@ FROM ubuntu:22.04
 
 LABEL maintainer="www.andreyolegovich.ru"
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 # Make sure the package repository is up to date.
 RUN apt-get update && \
-    apt-get -qy full-upgrade && \
+    apt-get install -y --no-install-recommends apt-utils && \
+    apt-get update && \
+    apt-get upgrade
+    
+RUN apt-get -qy full-upgrade && \
     apt-get install -qy git && \
 # Install a basic SSH server
     apt-get install -qy openssh-server && \
@@ -15,14 +21,16 @@ RUN apt-get update && \
 # Install maven
     apt-get install -qy maven && \
 # Cleanup old packages
-    apt-get -qy autoremove && \
+    apt-get -qy autoremove
+
 # Add user jenkins to the image
-    adduser --quiet jenkins && \
+RUN useradd -ms /bin/bash jenkins
+
 # Set password for the jenkins user (you may want to alter this).
-    echo "jenkins:jenkins" | chpasswd && \
+RUN echo "jenkins:jenkins" | chpasswd && \
     mkdir /home/jenkins/.m2
 
-#ADD settings.xml /home/jenkins/.m2/
+# ADD settings.xml /home/jenkins/.m2/
 # Copy authorized keys
 COPY .ssh/authorized_keys /home/jenkins/.ssh/authorized_keys
 
