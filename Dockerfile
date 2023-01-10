@@ -12,14 +12,18 @@ RUN apt-get update && \
     
 RUN apt-get -qy full-upgrade && \
     apt-get install -qy git && \
+
 # Install a basic SSH server
     apt-get install -qy openssh-server && \
     sed -i 's|session    required     pam_loginuid.so|session    optional     pam_loginuid.so|g' /etc/pam.d/sshd && \
     mkdir -p /var/run/sshd && \
-# Install JDK 8 (latest stable edition at 2019-04-01)
+
+# Install JDK 11 (latest stable edition)
     apt-get install -qy openjdk-11-jdk && \
+
 # Install maven
     apt-get install -qy maven && \
+
 # Cleanup old packages
     apt-get -qy autoremove
 
