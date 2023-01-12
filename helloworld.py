@@ -1,2 +1,2 @@
 print("Hello World!")
-print("Pipeline triggered by SCM")
+print("Pipeline triggered by SCM!")
